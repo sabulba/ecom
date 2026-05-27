@@ -1,5 +1,6 @@
 {
   "projects": {
     "default": "ecom-d2f6c"
-  }
+  },
+  "targets": {}
 }
