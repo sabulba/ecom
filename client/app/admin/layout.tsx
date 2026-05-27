@@ -21,7 +21,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
 
   try {
     const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
-    const storeId = process.env.NEXT_PUBLIC_STORE_ID ?? '';
+    const hostname = headersList.get('host') ?? 'localhost';
+    const { resolveStoreIdFromHostname } = await import('@/lib/tenant');
+    const storeId = (await resolveStoreIdFromHostname(hostname)) ?? process.env.NEXT_PUBLIC_STORE_ID ?? '';
     const userDoc = await adminDb
       .doc(`tenants/${storeId}/users/${decoded.uid}`)
       .get();

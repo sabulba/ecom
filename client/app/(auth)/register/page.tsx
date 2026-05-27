@@ -49,9 +49,15 @@ export default function RegisterPage() {
         lastName: data.lastName,
         phone: data.phone,
         role: 'customer',
-        status: 'active',
+        status: 'pending',
         storeId,
         createdAt: Date.now(),
+      });
+      const idToken = await credential.user.getIdToken();
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
       });
       toast.success('Account created!');
       router.push('/');
@@ -74,10 +80,16 @@ export default function RegisterPage() {
         lastName: user.displayName?.split(' ').slice(1).join(' ') ?? '',
         phone: '',
         role: 'customer',
-        status: 'active',
+        status: 'pending',
         storeId,
         createdAt: Date.now(),
       }, { merge: true });
+      const idToken = await credential.user.getIdToken();
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
+      });
       router.push('/');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Google sign-in failed';

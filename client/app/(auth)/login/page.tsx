@@ -33,7 +33,13 @@ export default function LoginPage() {
   async function onSubmit(data: LoginForm) {
     setLoading(true);
     try {
-      await signInWithEmail(data.email, data.password);
+      const credential = await signInWithEmail(data.email, data.password);
+      const idToken = await credential.user.getIdToken();
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
+      });
       router.push(redirect);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Login failed';
@@ -46,7 +52,13 @@ export default function LoginPage() {
   async function onGoogle() {
     setLoading(true);
     try {
-      await signInWithGoogle();
+      const credential = await signInWithGoogle();
+      const idToken = await credential.user.getIdToken();
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
+      });
       router.push(redirect);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Google sign-in failed';

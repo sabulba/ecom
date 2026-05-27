@@ -17,7 +17,7 @@ const NAV_LINKS = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const itemCount = useCartStore((s) => s.itemCount());
-  const { isLoggedIn } = useAuthStore();
+  const isLoggedIn = useAuthStore((s) => s.user !== null);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -54,7 +54,7 @@ export function Header() {
           <Button variant="ghost" size="icon" aria-label="Search">
             <Search size={20} />
           </Button>
-          <Link href={isLoggedIn() ? '/account' : '/login'}>
+          <Link href={isLoggedIn ? '/account' : '/login'}>
             <Button variant="ghost" size="icon" aria-label="Account">
               <User size={20} />
             </Button>

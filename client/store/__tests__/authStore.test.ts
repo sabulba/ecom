@@ -47,4 +47,9 @@ describe('authStore', () => {
     useAuthStore.getState().setUser(null);
     expect(useAuthStore.getState().user).toBeNull();
   });
+
+  it('isManager returns true for manager role', () => {
+    useAuthStore.getState().setUser({ ...mockUser, role: 'manager' });
+    expect(useAuthStore.getState().isManager()).toBe(true);
+  });
 });
