@@ -33,8 +33,16 @@ firebase deploy --only functions
 See `client/.env.example` for required variables.
 
 ## Deploy
+
+### Client (Firebase App Hosting)
 ```bash
-firebase deploy
+# From Firebase console: set up App Hosting backend pointing to this repo
+# App Hosting auto-deploys on push to main
+```
+
+### Cloud Functions
+```bash
+firebase deploy --only functions
 ```
 
 ## Tech Stack
